@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { createClient } from "@prismicio/client";
+import { createClient, repositoryName } from "@/prismicio";
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { PrismicPreview } from '@prismicio/next';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const client = createClient('tutorialcreating');
+  const client = createClient();
 
   const settings = await client.getSingle('settings')
  
@@ -32,6 +33,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <PrismicPreview repositoryName={repositoryName}/>
       </body>
     </html>
   );
