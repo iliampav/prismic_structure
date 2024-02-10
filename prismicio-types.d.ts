@@ -4,7 +4,7 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type HomepageDocumentDataSlicesSlice = HeroSlice;
+type HomepageDocumentDataSlicesSlice = HeroNewSlice;
 
 /**
  * Content for homepage documents
@@ -342,6 +342,91 @@ type HeroSliceVariation = HeroSliceDefault | HeroSliceImageRight;
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
+/**
+ * Primary content in *HeroNew → Primary*
+ */
+export interface HeroNewSliceDefaultPrimary {
+  /**
+   * Heading field in *HeroNew → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_new.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Body field in *HeroNew → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_new.primary.body
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  body: prismic.RichTextField;
+
+  /**
+   * Button Text field in *HeroNew → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_new.primary.button_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  button_text: prismic.KeyTextField;
+
+  /**
+   * Button Link field in *HeroNew → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_new.primary.button_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  button_link: prismic.LinkField;
+
+  /**
+   * Image field in *HeroNew → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_new.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for HeroNew Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroNewSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<HeroNewSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *HeroNew*
+ */
+type HeroNewSliceVariation = HeroNewSliceDefault;
+
+/**
+ * HeroNew Shared Slice
+ *
+ * - **API ID**: `hero_new`
+ * - **Description**: HeroNew
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroNewSlice = prismic.SharedSlice<
+  "hero_new",
+  HeroNewSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -365,6 +450,10 @@ declare module "@prismicio/client" {
       HeroSliceVariation,
       HeroSliceDefault,
       HeroSliceImageRight,
+      HeroNewSlice,
+      HeroNewSliceDefaultPrimary,
+      HeroNewSliceVariation,
+      HeroNewSliceDefault,
     };
   }
 }
