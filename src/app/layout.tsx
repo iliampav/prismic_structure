@@ -2,19 +2,21 @@ import type { Metadata } from 'next'
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { createClient } from "@prismicio/client";
+import Header from '@/components/header';
+import Footer from '@/components/footer';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient('tutorialcreating');
 
-  const page = await client.getSingle('settings')
+  const settings = await client.getSingle('settings')
  
   return {
-    title: page.data.site_title || 'Sem texto adicionado no titulo',
-    description: page.data.meta_description || 'sem description utilizada',
+    title: settings.data.site_title || 'Sem texto adicionado no titulo',
+    description: settings.data.meta_description || 'sem description utilizada',
     openGraph: {
-      images: [page.data.og_image.url || ""],
+      images: [settings.data.og_image.url || ""],
     },
   }
 }
@@ -27,9 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header>Header!</header>
+        <Header />
         {children}
-        <footer>Footer!</footer>
+        <Footer />
       </body>
     </html>
   );
