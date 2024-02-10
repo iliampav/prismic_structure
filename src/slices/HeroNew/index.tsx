@@ -17,6 +17,10 @@ const HeroNew = ({ slice }: HeroNewProps): JSX.Element => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
     >
+      {
+        slice.variation === "letToRight" &&
+        <h1>Altera como achar melhor</h1>
+      }
       <PrismicRichText field={slice.primary.heading} />
       <PrismicRichText field={slice.primary.body} />
       <>{slice.primary.button_text}</>
